@@ -3,7 +3,7 @@ from collections import Counter
 
 class SimpleReport:
     @classmethod
-    def generate(cls, lista):
+    def generate(self, lista):
         oldest_date = min(
             [product["data_de_fabricacao"] for product in lista]
         )
