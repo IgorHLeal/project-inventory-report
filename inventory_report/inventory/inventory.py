@@ -14,7 +14,8 @@ class Inventory:
             return Inventory.open_json(path, type)
         elif 'xml' in path:
             return Inventory.open_xml(path, type)
-        raise ValueError("Arquivo inválido")
+        else:
+            raise ValueError("Arquivo inválido")
 
     # Conteúdo do dia 1.2
     @classmethod
