@@ -1,23 +1,30 @@
 from inventory_report.reports.simple_report import SimpleReport
-from collections import Counter
 
 
 class CompleteReport(SimpleReport):
     @classmethod
-    def generate(self, product):
-        simple_report = super().generate(product)
+    def generate(self, productsList):
+        simple_report = SimpleReport.generate(productsList)
 
-        products = Counter(
-            value["nome_da_empresa"] for value in product
-        )
+        company_stock = {}
+
+        for value in productsList:
+            if value["nome_da_empresa"] in company_stock:
+                company_stock[value["nome_da_empresa"]] += 1
+            else:
+                company_stock[value["nome_da_empresa"]] = 1
 
         result = ""
 
-        for company in products:
-            result += f"- {company}: {products[company]}\n"
+        for key, value in company_stock.items():
+            result += f"- {key}: {value}\n"
 
         return (
             f"{simple_report}\n"
             f"Produtos estocados por empresa:\n"
             f"{result}"
         )
+
+
+# Referencias:
+# https://stackoverflow.com/questions/10756427/loop-through-all-nested-dictionary-values
