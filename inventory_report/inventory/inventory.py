@@ -9,11 +9,11 @@ class Inventory:
     @classmethod
     def import_data(self, path, type):
         if 'csv' in path:
-            return Inventory().open_csv(path, type)
+            return Inventory.open_csv(path, type)
         elif 'json' in path:
-            return Inventory().open_json(path, type)
+            return Inventory.open_json(path, type)
         elif 'xml' in path:
-            return Inventory().open_xml(path, type)
+            return Inventory.open_xml(path, type)
         raise ValueError("Arquivo inválido")
 
     # Conteúdo do dia 1.2
@@ -22,9 +22,9 @@ class Inventory:
         with open(path, encoding="utf-8") as file:
             inventory_file = csv.DictReader(file, delimiter=",", quotechar='"')
             if type == "simples":
-                return SimpleReport().generate(list(inventory_file))
+                return SimpleReport.generate(list(inventory_file))
             elif type == "completo":
-                return CompleteReport().generate(list(inventory_file))
+                return CompleteReport.generate(list(inventory_file))
             else:
                 raise ValueError("Tipo inválido")
 
@@ -33,9 +33,9 @@ class Inventory:
         with open(path, 'r') as file:
             inventory_file = json.load(file)
             if type == "simples":
-                return SimpleReport().generate(list(inventory_file))
+                return SimpleReport.generate(list(inventory_file))
             elif type == "completo":
-                return CompleteReport().generate(list(inventory_file))
+                return CompleteReport.generate(list(inventory_file))
             else:
                 raise ValueError("Tipo inválido")
 
@@ -48,8 +48,8 @@ class Inventory:
         with open(path) as file:
             inventory_file = xmltodict.parse(file.read())["dataset"]["record"]
             if type == "simples":
-                return SimpleReport().generate(list(inventory_file))
+                return SimpleReport.generate(list(inventory_file))
             elif type == "completo":
-                return CompleteReport().generate(list(inventory_file))
+                return CompleteReport.generate(list(inventory_file))
             else:
                 raise ValueError("Tipo inválido")

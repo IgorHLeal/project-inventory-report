@@ -2,7 +2,7 @@ from inventory_report.importer.importer import Importer
 import xmltodict
 
 
-class Xml(Importer):
+class XmlImporter(Importer):
     @classmethod
     def import_data(self, path):
         if 'xml' not in path:
