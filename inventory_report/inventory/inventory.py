@@ -7,50 +7,52 @@ import xmltodict
 
 class Inventory:
     @classmethod
-    def import_data(self, path, type):
+    def import_data(self, path, tipo):
         if 'csv' in path:
-            return Inventory.open_csv(path, type)
+            return Inventory.open_csv(path, tipo)
         elif 'json' in path:
-            return Inventory.open_json(path, type)
+            return Inventory.open_json(path, tipo)
         elif 'xml' in path:
-            return Inventory.open_xml(path, type)
+            return Inventory.open_xml(path, tipo)
         else:
             raise ValueError("Arquivo inválido")
 
     # Conteúdo do dia 1.2
     @classmethod
-    def open_csv(self, path, type):
+    def open_csv(self, path, tipo):
         with open(path, encoding="utf-8") as file:
             inventory_file = csv.DictReader(file, delimiter=",", quotechar='"')
-            if type == "simples":
+            if tipo == "simples":
                 return SimpleReport.generate(list(inventory_file))
-            elif type == "completo":
+            elif tipo == "completo":
                 return CompleteReport.generate(list(inventory_file))
             else:
                 raise ValueError("Tipo inválido")
 
     @classmethod
-    def open_json(self, path, type):
-        with open(path, 'r') as file:
+    def open_json(self, path, tipo):
+        with open(path) as file:
             inventory_file = json.load(file)
-            if type == "simples":
+            if tipo == "simples":
                 return SimpleReport.generate(list(inventory_file))
-            elif type == "completo":
+            elif tipo == "completo":
                 return CompleteReport.generate(list(inventory_file))
             else:
                 raise ValueError("Tipo inválido")
 
-    # Install xmltodict: https://pypi.org/project/xmltodict/
-    # Using xmltodict: https://docs.python-guide.org/scenarios/xml/
-    # https://docs.python-guide.org/scenarios/xml/
-    # https://acervolima.com/ler-e-escrever-arquivos-xml-em-python/
     @classmethod
-    def open_xml(self, path, type):
+    def open_xml(self, path, tipo):
         with open(path) as file:
             inventory_file = xmltodict.parse(file.read())["dataset"]["record"]
-            if type == "simples":
+            if tipo == "simples":
                 return SimpleReport.generate(list(inventory_file))
-            elif type == "completo":
+            elif tipo == "completo":
                 return CompleteReport.generate(list(inventory_file))
             else:
                 raise ValueError("Tipo inválido")
+
+
+# Install xmltodict: https://pypi.org/project/xmltodict/
+# Using xmltodict: https://docs.python-guide.org/scenarios/xml/
+# https://docs.python-guide.org/scenarios/xml/
+# https://acervolima.com/ler-e-escrever-arquivos-xml-em-python/
