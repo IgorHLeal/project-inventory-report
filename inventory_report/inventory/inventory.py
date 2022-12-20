@@ -14,7 +14,7 @@ class Inventory:
             return Inventory().open_json(path, type)
         elif 'xml' in path:
             return Inventory().open_xml(path, type)
-        raise ValueError()
+        raise ValueError("Arquivo inválido")
 
     # Conteúdo do dia 1.2
     @classmethod
@@ -26,7 +26,7 @@ class Inventory:
             elif type == "completo":
                 return CompleteReport().generate(list(inventory_file))
             else:
-                raise ValueError
+                raise ValueError("Tipo inválido")
 
     @classmethod
     def open_json(self, path, type):
@@ -37,7 +37,7 @@ class Inventory:
             elif type == "completo":
                 return CompleteReport().generate(list(inventory_file))
             else:
-                raise ValueError
+                raise ValueError("Tipo inválido")
 
     # Install xmltodict: https://pypi.org/project/xmltodict/
     # Using xmltodict: https://docs.python-guide.org/scenarios/xml/
@@ -52,4 +52,4 @@ class Inventory:
             elif type == "completo":
                 return CompleteReport().generate(list(inventory_file))
             else:
-                raise ValueError
+                raise ValueError("Tipo inválido")
